@@ -1,0 +1,54 @@
+<!--index.wxml-->
+<view class="wrap">
+		
+		<view class="fenge"></view>
+		<view class="content1">
+			<text>位移实时数据</text>
+            <view class="">
+            	<!-- <view id="canvasLineA"></view> -->
+				
+				
+				
+            </view>
+ 
+        </view>
+		<view class="fenge"></view>
+		<view class="content2">
+		    <text>土壤含水率实时数据</text>
+		    <view class="">
+		    	
+		    	
+		    	
+		    </view>
+		</view>
+		<view class="fenge"></view>
+		<view class="content3">
+			
+			<text>设备布点图</text>
+			<view>
+				<image style="width: 100%;" src="{{imgUrl}}" mode="widthFix"></image>
+			</view>
+		</view>
+		<view class="fenge"></view>
+		<view class="content4">
+      <view class="c4_title">
+				
+				
+				<view class="sousuo">
+					
+				</view>
+				
+			</view>
+			<view class="table">
+				<view class="th"><text class="th1">编号</text><text class="th2">真实值</text><text class="th3">时间</text></view>
+				<view class='tbody'>
+					<view wx:for="{{tableData}}" wx:key="index" class="{{index%2==0?'th_bg':''}} li">
+						<text class="tr1">{{item.name}}</text><text class="tr2">{{item.title}}</text><text class="tr3">{{item.date}}</text>
+					</view>
+					
+					
+				</view>
+			</view>
+		</view>
+		<view class="fenge"></view>
+	</view>

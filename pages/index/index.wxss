@@ -1,0 +1,103 @@
+.content1 text,.content2 text,.content3 text{
+		font-size: 28rpx;
+		padding: 5px 12px;
+		display: inline-block;
+	}
+	
+	#canvasLineA,#canvasLineB{
+		width: 100%;
+		height: 500rpx;
+		
+	}
+	
+	.c4_title{
+		padding: 30rpx 20rpx;
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
+	}
+	.c4_title>picker{
+		border: 1px solid #aaa;
+		border-radius: 16rpx;
+		text-align: center;
+		margin: 0 8px;
+		font-size: 26rpx;
+		height: 50rpx;
+		line-height: 50rpx;
+	}
+	.shebei,.riqi{
+		width: 40%;
+	}
+	.c4_title>.sousuo{
+		width: 20%;
+		margin: 0 8px;
+		background: #43aea8;
+		border: 1px solid #43aea8;
+		border-radius: 16rpx;
+		text-align: center;
+		height: 50rpx;
+		display: table-cell;
+		
+	}
+	.sousuo .uni-icon{
+		display: block;
+		font-size: 40rpx;
+		line-height: 50rpx;
+	}
+	
+	.c4_title>.sousuo:active{
+		background: #50D0CA;
+		border: 1px solid #50D0CA;
+	}
+	.table{
+		padding: 30rpx 60rpx 60rpx;
+		font-size: 32rpx;
+	}
+	.table .th,.tbody .li{
+		display: flex;
+		text-align: center;
+	}
+	.table .th{
+		font-weight: bold;
+		border-bottom: 3rpx solid #ddd;
+		height: 60rpx;
+	}
+	.tbody .li{
+		border-top: 3rpx solid #ddd;
+		height: 60rpx;
+		line-height: 60rpx;
+    display: flex;
+	}
+	.th_bg{
+		background: #f0f0f0;
+	}
+	.table .th1,.table .th2,.table .th3{
+		display: block;
+	}
+	.table .th1{
+		width: 25%;
+	}
+	.table .th2{
+		width: 25%;
+	}
+	.table .th3{
+		width: 50%;
+		
+	}
+	.tbody .tr1,.tbody .tr2,.tbody .tr3{
+		display: block;
+	}
+	.tbody .tr1{
+		width: 25%;
+	}
+	.tbody .tr2{
+		width: 25%;
+	}
+	.tbody .tr3{
+		width: 50%;
+	}
+	.fenge{
+		width: 100%;
+		height: 40rpx;
+		background: #eee;
+	}

@@ -1,0 +1,19 @@
+<!--pages/loginBefore/loginBefore.wxml-->
+
+<view class="bg_big">
+		
+			<div class="image_big"><image src="../../static/bg_shou.jpg" mode=""></image></div>
+			<div class="mark_big"></div>
+			<div class="top">
+				<div class='top_c1'><image src="../../static/loginBeforeText.png"         mode="widthFix"></image></div>
+				<view  class='top_c2'>
+					<view class='list' id='0' value="1" bindtap="gotoPage">京张高铁项目</view>
+					<view class='list' id='1' value="2" bindtap="gotoPage">京沈高铁项目</view>
+					<view class='list' id='2' value="3" bindtap="gotoPage">冬奥会项目</view>
+				</view>
+			</div>
+			<div class="bottom">
+				<image src="../../static/annengBai.png" mode="widthFix"></image>
+			</div>
+		
+	</view>

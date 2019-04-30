@@ -1,0 +1,24 @@
+<!--pages/login/login.wxml-->
+<view  class="bg_big">
+		<div class="image_big"><image src="{{bgImg}}" mode=""></image></div>
+		<div class="mark_big"></div>
+		<div class="login_box">
+				
+				<image src="{{textImgUrl}}" alt="" mode="widthFix"></image>
+				
+				<view class="f1">
+					<label for="user" class="label1">用户</label>
+					<input id="user" type="text" class="name username" bindinput ="userNameInput"></input>
+				</view>
+				<view class="f2">
+					<label for="psd" class="label2">密码</label>
+					<input class="password" id="psd" type="password" bindinput ="pwdInput"></input>
+				</view>
+
+				<button class="denglu" bindtap="login_index" type="primary">登  录</button>
+		</div>
+		<div class="bottom">
+			<image src="../../static/logo_img2.png" mode="widthFix"></image>
+		</div>
+		
+	</view>

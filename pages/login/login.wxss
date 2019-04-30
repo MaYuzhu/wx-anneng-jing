@@ -1,0 +1,82 @@
+/* pages/login/login.wxss */
+page{
+		width: 100%;
+		height: 100%;
+	}
+
+	.bg_big{
+		width: 100%;
+		height: 100%;
+		position: relative;
+		font-size: 16px;
+	}
+	.image_big{
+		position: absolute;
+		width: 100%;
+		height: 100%;
+	}
+	.image_big image{
+		display: block;
+		width: 100%;
+		height: 100%;
+	}
+	.mark_big{
+		width: 100%;
+		height: 100%;
+		position: absolute;
+		background: linear-gradient(to top, rgba(200, 200, 200, 0), rgba(250, 250, 250, 1));
+	}
+	.login_box{
+		width: 64%;
+		position: absolute;
+		top:40%;
+		left: 50%;
+		transform: translate(-50%,-50%);
+		z-index: 20;
+	}
+	.login_box image{
+		width: 100%;
+	}
+	.f1,.f2{
+		width: 100%;
+		height: 38px;
+		line-height: 38px;
+		margin: 22px 0;
+		border: 1px solid #666666;
+		border-radius: 22px;
+		display: flex;
+		align-items: stretch;
+		color: #333;
+	}
+	.label1,.label2{
+		margin-left: 15px;
+		display: inline-block;
+		
+	}
+	.login_box input{
+		padding-left: 5px;
+		width: 70%;
+		height: 100%;
+		display: inline-block;
+	}
+	.denglu{
+		height: 38px;
+		line-height: 38px;
+		border-radius: 19px;
+		background:linear-gradient(#59f0ea,#43aea8);
+		font-size: 16px;
+		color: #FFFFFF;
+	}
+
+	.bottom{
+		width: 120px;
+		height: 36px;
+		position: absolute;
+		z-index: 20;
+		left: 50%;
+		transform: translate(-50%,0);
+		bottom: 50px;
+	}
+	.bottom image{
+		width: 100%;
+	}
