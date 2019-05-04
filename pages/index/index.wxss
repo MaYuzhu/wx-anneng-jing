@@ -9,6 +9,9 @@
 		height: 500rpx;
 		
 	}
+    .content1{
+        position: relative;
+    }
 	
 	.c4_title{
 		padding: 30rpx 20rpx;
@@ -30,13 +33,15 @@
 	}
 	.c4_title>.sousuo{
 		width: 20%;
-		margin: 0 8px;
+		margin: 0 8rpx;
 		background: #43aea8;
 		border: 1px solid #43aea8;
 		border-radius: 16rpx;
 		text-align: center;
 		height: 50rpx;
-		display: table-cell;
+		display: flex;
+         align-items: center;
+         justify-content: center;
 		
 	}
 	.sousuo .uni-icon{
@@ -101,3 +106,10 @@
 		height: 40rpx;
 		background: #eee;
 	}
+
+    #column-dom{
+        height: 600rpx;
+        width: 100%;
+        border: 1px solid #00f;
+    }
+   

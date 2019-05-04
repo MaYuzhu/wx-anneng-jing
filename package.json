@@ -1,0 +1,23 @@
+{
+  "name": "wx-anneng-jing",
+  "version": "1.0.0",
+  "description": "",
+  "main": "app.js",
+  "dependencies": {
+    "@antv/f2-canvas": "^1.0.5"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/MaYuzhu/wx-anneng-jing.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/MaYuzhu/wx-anneng-jing/issues"
+  },
+  "homepage": "https://github.com/MaYuzhu/wx-anneng-jing#readme"
+}

@@ -4,11 +4,8 @@
 		<view class="fenge"></view>
 		<view class="content1">
 			<text>位移实时数据</text>
-            <view class="">
-            	<!-- <view id="canvasLineA"></view> -->
-				
-				
-				
+            <view class="container">
+                <ff-canvas id="column-dom" canvas-id="column" opts="{{ opts }}"></ff-canvas>
             </view>
  
         </view>
@@ -32,10 +29,25 @@
 		<view class="fenge"></view>
 		<view class="content4">
       <view class="c4_title">
-				
+                <picker bindchange="bindPickerChange" value="{{dveArrIndex}}" range="{{dveArr}}">
+                    <view class="picker">
+                        当前选择：{{dveArr[dveArrIndex]}}
+                    </view>
+                </picker>
+				<picker
+                    mode="date"
+                    value="{{date}}"
+                    start="2015-09-01"
+                    end="2022-09-01"
+                    bindchange="bindDateChange"
+                >
+                    <view class="picker">
+                    当前选择: {{date}}
+                    </view>
+                </picker>
 				
 				<view class="sousuo">
-					
+					<icon type="search" size="20" color="#f0f0f0" />
 				</view>
 				
 			</view>

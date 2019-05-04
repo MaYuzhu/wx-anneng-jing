@@ -78,7 +78,7 @@ Page({
         password: that.data.pwd
       },
       success:(res)=>{
-        //console.log(res)
+        console.log(res)
         if (res.data.status != 1) {
           wx.showToast({
             icon: 'none',

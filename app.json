@@ -1,8 +1,8 @@
 {
   "pages": [
-    
-    "pages/loginBefore/loginBefore",
     "pages/index/index",
+    "pages/loginBefore/loginBefore",
+   
     "pages/logs/logs",
     "pages/login/login"
   ],
@@ -11,5 +11,6 @@
     "navigationBarBackgroundColor": "#fff",
     "navigationBarTitleText": "WeChat",
     "navigationBarTextStyle": "black"
-  }
+  },
+  "sitemapLocation": "sitemap.json"
 }
