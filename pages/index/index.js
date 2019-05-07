@@ -5,44 +5,68 @@ import F2 from '@antv/wx-f2';
 var _ = require('../../utils/underscore.js');
 
 let chart = null
+let chart2 = null
 let data = null
+let arrWeiyi = []
+let arrShidu = []
 let arrTest = []
+let padding = [70,124]
+let paddingV = 70
+let padding2 = [70, 90]
+let paddingV2 = 70
 
 function initChart(canvas, width, height, F2) { // 使用 F2 绘制图表
-    data = arrTest
+  data = arrWeiyi
     chart = new F2.Chart({
         el: canvas,
         width,
-        height
+        height,
+      padding: ['auto', 'auto', paddingV2, 'auto'],
+      
     });
 
     chart.source(data, {
         date: {
             range: [0, 1],
             type: 'timeCat',
-            mask: 'MM-DD'
+            mask: 'MM-DD',
+          
         },
         value: {
-            min:10,
-            max: 60,
-            tickCount: 4
+            min:-20,
+            max: 20,
+            tickCount: 8,
+            formatter: function formatter(val) {
+              return val.toFixed(2) + 'mm';
+            }
         },
 
         // sales: {
         //   tickCount: 5
         // }
     });
+    chart.scale('year', {
+      range: [0, 1]
+    });
     chart.guide().line({ // 绘制辅助线
-        start: ['min', 40],
-        end: ['max', 40],
+        start: ['min', 10],
+        end: ['max', 10],
         style: {
             stroke: '#FF4D4F',
             lineDash: [2]
         }
     });
+    chart.guide().line({ // 绘制辅助线
+      start: ['min', -10],
+      end: ['max', -10],
+      style: {
+        stroke: '#FF4D4F',
+        lineDash: [2]
+      }
+    });
     chart.guide().text({ // 绘制辅助文本
-        position: ['max', 40],
-        content: '预警值： 40',
+        position: ['max', 10],
+        content: '阈值：10',
         offsetY: -5,
         style: {
             fill: '#FF4D4F',
@@ -50,43 +74,149 @@ function initChart(canvas, width, height, F2) { // 使用 F2 绘制图表
             textBaseline: 'bottom'
         }
     });
-    // chart.tooltip({
-    //   showItemMarker: false,
-    //   onShow(ev) {
-    //     const { items } = ev;
-    //     items[0].name = null;
-    //     items[0].name = items[0].title;
-    //     items[0].value = '¥ ' + items[0].value;
-    //   }
-    // });
-
+    chart.guide().text({ // 绘制辅助文本
+      position: ['max', -10],
+      content: '阈值：-10',
+      offsetY: -5,
+      style: {
+        fill: '#FF4D4F',
+        textAlign: 'end',
+        textBaseline: 'bottom'
+      }
+    });
+    
+    chart.legend({ position: 'bottom', align: 'left' });
     chart.tooltip({
 
         custom: true, // 自定义 tooltip 内容框
         onChange: function onChange(obj) {
-            var legend = chart.get('legendController').legends.top[0];
-            var tooltipItems = obj.items;
-            var legendItems = legend.items;
-            var map = {};
-            legendItems.map(function (item) {
-                map[item.name] = _.clone(item);
-            });
-            tooltipItems.map(function (item) {
-                var name = item.name;
-                var value = item.value;
-                if (map[name]) {
-                    map[name].value = value;
-                }
-            });
-            legend.setItems(_.values(map));
+          var legend = chart.get('legendController').legends.bottom[0];
+          var tooltipItems = obj.items;
+          var legendItems = legend.items;
+          var map = {};
+          legendItems.map(function (item) {
+            map[item.name] = _.clone(item);
+          });
+          tooltipItems.map(function (item) {
+            var name = item.name;
+            var value = item.value;
+            if (map[name]) {
+              map[name].value = value;
+            }
+          });
+          legend.setItems(_.values(map));
         },
     })
-
-    chart.line().position('year*value').color('type');
+    chart.axis('year', {
+      tickLine: {
+        length: 4,
+        stroke: '#e8e8e8',
+        lineWidth: 1
+      },
+      label: {
+        textAlign: 'end',
+        textBaseline: 'middle',
+        rotate: Math.PI / -4
+      }
+    });
+    
+    chart.line().position('year*value').color('type').size(2);
+    chart.point().position('year*value').color('type').size(2);
     chart.render();
     return chart;
 }
+function initChart2(canvas, width, height, F2) { // 使用 F2 绘制图表
+  data = arrShidu
+  chart2 = new F2.Chart({
+    el: canvas,
+    width,
+    height,
+    padding: ['auto', 'auto', paddingV, 'auto'],
 
+  });
+
+  chart2.source(data, {
+    date: {
+      range: [0, 1],
+      type: 'timeCat',
+      mask: 'MM-DD',
+
+    },
+    value: {
+      min: 0,
+      max: 60,
+      tickCount: 4,
+      formatter: function formatter(val) {
+        return val.toFixed(1) + '%';
+      }
+    },
+
+    // sales: {
+    //   tickCount: 5
+    // }
+  });
+  chart2.scale('year', {
+    range: [0, 1]
+  });
+  chart2.guide().line({ // 绘制辅助线
+    start: ['min', 20],
+    end: ['max', 20],
+    style: {
+      stroke: '#FF4D4F',
+      lineDash: [2]
+    }
+  });
+  chart2.guide().text({ // 绘制辅助文本
+    position: ['max', 20],
+    content: '阈值： 20',
+    offsetY: -5,
+    style: {
+      fill: '#FF4D4F',
+      textAlign: 'end',
+      textBaseline: 'bottom'
+    }
+  });
+
+  chart2.legend({ position: 'bottom', align: 'left' });
+  chart2.tooltip({
+
+    custom: true, // 自定义 tooltip 内容框
+    onChange: function onChange(obj) {
+      var legend = chart2.get('legendController').legends.bottom[0];
+      var tooltipItems = obj.items;
+      var legendItems = legend.items;
+      var map = {};
+      legendItems.map(function (item) {
+        map[item.name] = _.clone(item);
+      });
+      tooltipItems.map(function (item) {
+        var name = item.name;
+        var value = item.value;
+        if (map[name]) {
+          map[name].value = value;
+        }
+      });
+      legend.setItems(_.values(map));
+    },
+  })
+  chart2.axis('year', {
+    tickLine: {
+      length: 4,
+      stroke: '#e8e8e8',
+      lineWidth: 1
+    },
+    label: {
+      textAlign: 'end',
+      textBaseline: 'middle',
+      rotate: Math.PI / -4
+    }
+  });
+
+  chart2.line().position('year*value').color('type').size(2);
+  chart2.point().position('year*value').color('type').size(2);
+  chart2.render();
+  return chart2;
+}
 Page({
   data: {
     
@@ -120,23 +250,27 @@ Page({
 
     ],
     imgUrl:'',
-    date: '2016-09-01',
-
+    date: '请选择日期',
+    devNum:'请选择设备',
+    optionsNum:0,
+    session_id:'',
     salesTrendData: {
         lazyLoad: true   //延迟加载
     },
     opts: {
-        onInit: initChart
+      onInit: initChart
     },
-    
-    dveArr: ['美国', '中国', '巴西', '日本'],
-    dveArrIndex:0,
+    opts2: {
+      onInit: initChart2
+    },
+    startTime :'',
+    endTime:'',
+    today: '',
+    devArr: [],
+    devArrIndex:0,
+    devArrCode:[],
     tableData: [
-      {name:123,title:25.45,date:"2019-04-11 08"},
-      {name:123,title:25.45,date:"2019-04-11 08"},
-      {name:123,title:25.45,date:"2019-04-11 08"},
-      {name:123,title:25.45,date:"2019-04-11 08"},
-      {name:123,title:25.45,date:"2019-04-11 08"} 
+      //{name:123,title:25.45,date:"2019-04-11 08"},
     ]
   },
   //事件处理函数
@@ -145,54 +279,239 @@ Page({
       url: '../logs/logs'
     })
   },
-    bindPickerChange(e) {
-        console.log('picker发送选择改变，携带值为', e.detail.value)
-        this.setData({
-            dveArrIndex: e.detail.value
-        })
-    },
-    bindDateChange(e) {
-        console.log('picker发送选择改变，携带值为', e.detail.value)
-        this.setData({
-            date: e.detail.value
-        })
-    },
-  onLoad: function (options) {
-    let that = this;
-    console.log(options)
-    that.setData({
-      imgUrl: that.data.imgUrlArr[options.porject]
+  bindPickerChange(e) {
+    let that = this
+      //console.log('dev发送选择改变，携带值为', e.detail.value)
+      this.setData({
+          devArrIndex: e.detail.value,
+          devNum: that.data.devArr[e.detail.value]
+      })
+  },
+  bindDateChange(e) {
+      //console.log('date发送选择改变，携带值为', e.detail.value)
+      this.setData({
+          date: e.detail.value
+      })
+  },
+  getDevData:function(){
+    const that = this
+    if (that.data.devNum =='请选择设备') {
+      wx.showToast({
+        icon: 'none',
+        title: '请选择设备'
+      });
+      return
+    }
+    if (that.data.date =='请选择日期') {
+      wx.showToast({
+        icon: 'none',
+        title: '请选择日期'
+      });
+      return
+    }
+    wx.request({
+      url: that.data.porjectArr[that.data.optionsNum].apiUrl + '/tsd/getDevData.shtml',
+      header: {
+        'content-type': 'application/json',
+      },
+      dataType: "json",
+      jsonp: "callback",
+      data: {
+        'session_id': that.data.session_id,
+        'timetype': 'hour',
+        'starttime': that.data.date + ' 00:00:00',
+        'endtime': that.data.date + ' 23:59:59',
+        'devcode': that.data.devArrCode[that.data.devArrIndex],
+
+      },
+      success:(res)=>{
+        let devData = []
+        //console.log(res.data)
+        if(res.data){
+          for (let i = 0; i < res.data.data.length;i++){
+            devData.push({ 
+              name: i + 1, 
+              title: res.data.data[i].data.rh ? res.data.data[i].data.rh.toFixed(1)+'%' 
+                : res.data.data[i].data.l.toFixed(3)+'mm', 
+              date: res.data.data[i].time.substring(0,13) })
+          }
+          that.setData({
+            tableData: devData
+          })
+        }else{
+          wx.showToast({
+            icon: 'none',
+            title: '暂无数据'
+          });
+        }
+      },
+      fail: () => {
+        wx.showToast({
+          icon: 'none',
+          title: '网络错误...'
+        });
+      },
     })
 
-      wx.request({
-          url: 'https://weixin.zktop.com/jingshen/tsd/getBuildDevsData.shtml',
-          header: {
-              'content-type': 'application/json',
-
-          },
-          dataType: "json",
-          jsonp: "callback",
-          data: {
-              'timetype': 'hour',
-              'starttime': '2019-04-28 13:07:22',
-              'endtime': '2019-04-29 13:07:22',
-              'buildcode': '1308F0001'
-          },
-          success: res => {
-              //let aaa = []
-              console.log(res.data)
-                for(let i=0;i<res.data.length;i++){
-                    //aaa.push({ name: res.data[i].devname})
-                    for (let j = 0; j < res.data[0].data.length;j++){
-                        arrTest.push({ year: res.data[0].data[j].time, 
-                            type: res.data[i].devname,
-                            value: res.data[i].data[j].data.rh})
-                        }
-                }
-              console.log(arrTest)
-
-          }
+  },
+  onLoad: function (options) {
+    let that = this;
+    //console.log(options)
+    paddingV = padding[options.porject]
+    paddingV2 = padding2[options.porject]
+    if (options.porject){
+      that.setData({
+        imgUrl: that.data.imgUrlArr[options.porject],
+        optionsNum: options.porject
       })
+      wx.setNavigationBarTitle({
+        title: that.data.porjectArr[options.porject].title
+      })
+    }
+    that.setData({
+      today: this.getNowFormatDate(0).substring(0, 10),
+      startTime: this.getDate(this.getNowFormatDate(0), 0, 0, -1, 0, 0, 0),
+      endTime: this.getNowFormatDate(0),
+      session_id: wx.getStorageSync('session_id')
+    })
+    //let session_id = wx.getStorageSync('session_id');
+    //console.log(session_id)
+    wx.request({
+      url: that.data.porjectArr[options.porject].apiUrl+'/tsd/getBuildDevsData.shtml',
+        header: {
+            'content-type': 'application/json',
+        },
+        dataType: "json",
+        jsonp: "callback",
+        data: {
+            'timetype': 'hour',
+            'starttime': this.data.startTime,
+            'endtime': this.data.endTime,
+            'buildcode': this.data.porjectArr[options.porject].buildcode,
+            'session_id': this.data.session_id
+        },
+        success: res => {
+              //console.log(res.data)
+              // for(let i=0;i<res.data.length;i++){
+              //     //aaa.push({ name: res.data[i].devname})
+              //     for (let j = 0; j < 11; j++) { //j < res.data[0].data.length
+              //         arrTest.push({ year: res.data[0].data[j].time, 
+              //             type: res.data[i].devname,
+              //             value: res.data[i].data[j].data.rh})
+              //         }
+              // }
+            if(!res.data){
+              return false
+            }
+            let devA = []
+            let devB = []
+            for (let i = 0; i < res.data.length; i++){
+              devA.push(res.data[i].devname)
+              devB.push(res.data[i].devcode)
+            }
+            that.setData({
+              devArr: devA,
+              devArrCode: devB
+            })
+            let weiyi = res.data.filter((item) => {
+              return item.type == 'O'
+            })
+            let shidu = res.data.filter((item) => {
+              return item.type == 'K'
+            })
+            arrWeiyi = []
+            arrShidu = []
+            let maxIndex = 0
+            for (let i = 0; i < weiyi.length;i++){
+              if (weiyi[i].data.length >= 12) {
+                maxIndex = i
+                
+              }
+              for (let j = 0; j < weiyi[maxIndex].data.length; j++) { //j < weiyi[0].data.length
+                arrWeiyi.push({
+                  year: weiyi[maxIndex].data[j] ? weiyi[maxIndex].data[j].time.slice(5):null, 
+                  type: weiyi[i].devname ? weiyi[i].devname:null,
+                  value: weiyi[i].data[j] ? weiyi[i].data[j].data.l:null})
+                  }
+            }
+            //console.log(maxIndex)
+            for (let i = 0; i < shidu.length; i++) {
+              for (let j = 0; j < shidu[0].data.length; j++) { //j < shidu[0].data.length;
+                arrShidu.push({
+                  year: shidu[0].data[j].time.slice(5),
+                  type: shidu[i].devname,
+                  value: shidu[i].data[j] ? shidu[i].data[j].data.rh:null
+                })
+              }
+            }
+          
+          this.ecComponent = this.selectComponent('.column-dom1');
+          this.ecComponent2 = this.selectComponent('.column-dom2');
+          this.ecComponent.init(initChart);
+          this.ecComponent2.init(initChart2);
+          
+        },
+        fail:  () => {
+          wx.showToast({
+            icon: 'none',
+            title: '网络错误...'
+          });
+        },
+    })
+    
+  },
+  //获取时间格式
+  getDate(datetime, year, month, date, hour, minute, second) {
+    datetime = datetime.replace(/-/g, '/');
+    var now = new Date(datetime);
+    var year = now.getFullYear() + year;
+    var month = now.getMonth() + month;
+    var date = now.getDate() + date;
+
+    var hour = now.getHours() + hour;
+    var minute = now.getMinutes() + minute;
+    var second = now.getSeconds() + second;
+
+    var date = new Date(year, month, date, hour, minute, second);
+    return this.getNowFormatDate(date);
+  },
+  //获取当前时间格式
+  getNowFormatDate(datetime) {
+    var date;
+    if (datetime == 0) {
+      date = new Date();
+    } else {
+      date = new Date(datetime);
+    }
+
+    var seperator1 = "-";
+    var seperator2 = ":";
+    var month = date.getMonth() + 1;
+    var strDate = date.getDate();
+    if (month >= 1 && month <= 9) {
+      month = "0" + month;
+    }
+    if (strDate >= 0 && strDate <= 9) {
+      strDate = "0" + strDate;
+    }
+    var Hours = date.getHours()
+    var Minutes = date.getMinutes()
+    var Seconds = date.getSeconds()
+
+    if (Hours >= 0 && Hours <= 9) {
+      Hours = "0" + Hours;
+    }
+    if (Minutes >= 0 && Minutes <= 9) {
+      Minutes = "0" + Minutes;
+    }
+    if (Seconds >= 0 && Seconds <= 9) {
+      Seconds = "0" + Seconds;
+    }
+
+    var currentdate = date.getFullYear() + seperator1 + month + seperator1 + strDate
+      + " " + Hours + seperator2 + Minutes
+      + seperator2 + Seconds;
+    return currentdate;
   },
   
 })

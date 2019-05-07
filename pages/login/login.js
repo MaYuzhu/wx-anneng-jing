@@ -10,7 +10,8 @@ Page({
     apiUrl:'',
     apiUrlArr: [
       'https://weixin.zktop.com/jingzhang',  //京张
-      'https://weixin.zktop.com/jingshen'   //京沈
+      'https://weixin.zktop.com/jingshen',   //京沈
+      'https://weixin.zktop.com/jingshen'   //冬奥会
     ],
     dev: 0,
     textImgUrlArr: [
@@ -25,7 +26,8 @@ Page({
     ],
 
     username: '',
-    pwd: ''
+    pwd: '',
+    isDongAo:'',
   },
 
   /**
@@ -38,9 +40,10 @@ Page({
       bgImg : that.data.bgImgUrl[options.num],
       textImgUrl : that.data.textImgUrlArr[options.num],
       apiUrl: that.data.apiUrlArr[options.num],
-      dev: options.num
+      dev: options.num,
+      isDongAo: options.num
     })
-    
+     
     
   },
   userNameInput: function (e) {
@@ -53,10 +56,17 @@ Page({
       pwd: e.detail.value
     })
   },
-  //获取用户输入的密码
+  
   
   login_index:function(e){
     let that = this
+    if (that.data.isDongAo == 2) {
+      wx.showToast({
+        icon: 'none',
+        title: '冬奥会项目建设中...'
+      });
+      return;
+    }
     if (that.data.username.length <= 0) {
       wx.showToast({
         icon: 'none',
@@ -71,6 +81,7 @@ Page({
       });
       return;
     }
+    
     wx.request({
       url: that.data.apiUrl + '/user/login.shtml',
       data:{
@@ -78,7 +89,7 @@ Page({
         password: that.data.pwd
       },
       success:(res)=>{
-        console.log(res)
+        //console.log(res)
         if (res.data.status != 1) {
           wx.showToast({
             icon: 'none',
@@ -91,11 +102,8 @@ Page({
           icon: 'none',
           duration: 2000
         })
-        wx.setStorage({
-          key: 'session_id',
-          data: res.cookies[0]['session_id']
-        })
-
+        wx.setStorageSync('session_id', res.data.session_id)
+        
         wx.navigateTo({
           url: '../index/index?porject=' + that.data.dev,
         });

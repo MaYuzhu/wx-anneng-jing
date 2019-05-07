@@ -4,14 +4,11 @@
 		display: inline-block;
 	}
 	
-	#canvasLineA,#canvasLineB{
-		width: 100%;
-		height: 500rpx;
-		
-	}
-    .content1{
-        position: relative;
-    }
+	
+  .content1{
+      position: relative;
+      
+  }
 	
 	.c4_title{
 		padding: 30rpx 20rpx;
@@ -21,11 +18,13 @@
 	}
 	.c4_title>picker{
 		border: 1px solid #aaa;
+    box-shadow:inset 0px 0px 4px 1px #eee;
 		border-radius: 16rpx;
 		text-align: center;
 		margin: 0 8px;
 		font-size: 26rpx;
 		height: 50rpx;
+    width: 40%;
 		line-height: 50rpx;
 	}
 	.shebei,.riqi{
@@ -107,9 +106,9 @@
 		background: #eee;
 	}
 
-    #column-dom{
-        height: 600rpx;
-        width: 100%;
-        border: 1px solid #00f;
-    }
+  #column-dom{
+      height: 800rpx;
+      width: 100%;
+      /* border: 1px solid #00f; */
+  }
    
