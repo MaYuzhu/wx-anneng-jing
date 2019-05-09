@@ -426,15 +426,13 @@ Page({
             arrShidu = []
             
             let indexMax = weiyi[0].data.length
-            let index 
+            let index = 0 
             let indexMax2 = shidu[0].data.length
-            let index2 
+            let index2 = 0
             for (var x = 0; x < weiyi.length; x++){
               if (indexMax < weiyi[x].data.length) {
                 indexMax = weiyi[x].data.length;
                 index = x;
-              }else{
-                index = 0;
               }
             }
             for (let i = 0; i < weiyi.length;i++){
@@ -450,9 +448,7 @@ Page({
               if (indexMax < shidu[x].data.length) {
                 indexMax2 = shidu[x].data.length;
                 index2 = x;
-              } else {
-                index2 = 0;
-              }
+              } 
             }
             for (let i = 0; i < shidu.length; i++) {
               for (let j = 0; j < shidu[index2].data.length; j++) { //j < shidu[0].data.length;
@@ -468,7 +464,9 @@ Page({
           this.ecComponent2 = this.selectComponent('.column-dom2');
           this.ecComponent.init(initChart);
           this.ecComponent2.init(initChart2);
-          console.log(weiyi)
+          //console.log(weiyi)
+          //console.log(indexMax)
+          console.log(index)
         },
         fail:  () => {
           wx.showToast({
@@ -502,8 +500,8 @@ Page({
         devcode: that.data.porjectArr[options.porject].devcodeShidu
       },
       success: (res) => {
-        if (res.data.para_b) {
-          yuzhiShidu = res.data.para_b
+        if (res.data.para_a) {
+          yuzhiShidu = res.data.para_a
         }
       }
     })
