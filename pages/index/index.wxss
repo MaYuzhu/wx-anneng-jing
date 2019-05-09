@@ -38,16 +38,13 @@
 		border-radius: 16rpx;
 		text-align: center;
 		height: 50rpx;
+    
 		display: flex;
-         align-items: center;
-         justify-content: center;
+    align-items: center;
+    justify-content: center;
 		
 	}
-	.sousuo .uni-icon{
-		display: block;
-		font-size: 40rpx;
-		line-height: 50rpx;
-	}
+	
 	
 	.c4_title>.sousuo:active{
 		background: #50D0CA;

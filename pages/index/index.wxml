@@ -21,7 +21,7 @@
 			
 			<text>设备布点图</text>
 			<view>
-				<image style="width: 100%;" src="{{imgUrl}}" mode="widthFix"></image>
+				<image bindtap="imgLook" style="width:100%;display:block;" src="{{imgUrl}}" mode="widthFix"></image>
 			</view>
 		</view>
 		<view class="fenge"></view>
@@ -35,7 +35,7 @@
 				        <picker
                     mode="date"
                     value="{{date}}"
-                    start="2015-09-01"
+                    start="2018-01-01"
                     end="{{today}}"
                     bindchange="bindDateChange"
                 >
@@ -45,7 +45,7 @@
                 </picker>
 				
 				<view class="sousuo" bindtap="getDevData">
-					<icon type="search" size="16" color="#f0f0f0" />
+					<icon type="search" size='30rpx'  color="#f0f0f0" />
 				</view>
 				
 			</view>

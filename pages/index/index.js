@@ -14,6 +14,8 @@ let padding = [70,124]
 let paddingV = 70
 let padding2 = [70, 90]
 let paddingV2 = 70
+let yuzhiWeiyi = 10
+let yuzhiShidu = 20
 
 function initChart(canvas, width, height, F2) { // 使用 F2 绘制图表
   data = arrWeiyi
@@ -49,24 +51,24 @@ function initChart(canvas, width, height, F2) { // 使用 F2 绘制图表
       range: [0, 1]
     });
     chart.guide().line({ // 绘制辅助线
-        start: ['min', 10],
-        end: ['max', 10],
-        style: {
-            stroke: '#FF4D4F',
-            lineDash: [2]
-        }
+      start: ['min', yuzhiWeiyi],
+      end: ['max', yuzhiWeiyi],
+      style: {
+          stroke: '#FF4D4F',
+          lineDash: [2]
+      }
     });
     chart.guide().line({ // 绘制辅助线
-      start: ['min', -10],
-      end: ['max', -10],
+      start: ['min', -yuzhiWeiyi],
+      end: ['max', -yuzhiWeiyi],
       style: {
         stroke: '#FF4D4F',
         lineDash: [2]
       }
     });
     chart.guide().text({ // 绘制辅助文本
-        position: ['max', 10],
-        content: '阈值：10',
+      position: ['max', yuzhiWeiyi],
+      content: '阈值' + yuzhiWeiyi,
         offsetY: -5,
         style: {
             fill: '#FF4D4F',
@@ -75,8 +77,8 @@ function initChart(canvas, width, height, F2) { // 使用 F2 绘制图表
         }
     });
     chart.guide().text({ // 绘制辅助文本
-      position: ['max', -10],
-      content: '阈值：-10',
+      position: ['max', -yuzhiWeiyi],
+      content: '阈值' + -yuzhiWeiyi,
       offsetY: -5,
       style: {
         fill: '#FF4D4F',
@@ -159,16 +161,16 @@ function initChart2(canvas, width, height, F2) { // 使用 F2 绘制图表
     range: [0, 1]
   });
   chart2.guide().line({ // 绘制辅助线
-    start: ['min', 20],
-    end: ['max', 20],
+    start: ['min', yuzhiShidu],
+    end: ['max', yuzhiShidu],
     style: {
       stroke: '#FF4D4F',
       lineDash: [2]
     }
   });
   chart2.guide().text({ // 绘制辅助文本
-    position: ['max', 20],
-    content: '阈值： 20',
+    position: ['max', yuzhiShidu],
+    content: '阈值' + yuzhiShidu,
     offsetY: -5,
     style: {
       fill: '#FF4D4F',
@@ -376,6 +378,7 @@ Page({
     })
     //let session_id = wx.getStorageSync('session_id');
     //console.log(session_id)
+    //图表数据请求
     wx.request({
       url: that.data.porjectArr[options.porject].apiUrl+'/tsd/getBuildDevsData.shtml',
         header: {
@@ -421,24 +424,40 @@ Page({
             })
             arrWeiyi = []
             arrShidu = []
-            let maxIndex = 0
-            for (let i = 0; i < weiyi.length;i++){
-              if (weiyi[i].data.length >= 12) {
-                maxIndex = i
-                
+            
+            let indexMax = weiyi[0].data.length
+            let index 
+            let indexMax2 = shidu[0].data.length
+            let index2 
+            for (var x = 0; x < weiyi.length; x++){
+              if (indexMax < weiyi[x].data.length) {
+                indexMax = weiyi[x].data.length;
+                index = x;
+              }else{
+                index = 0;
               }
-              for (let j = 0; j < weiyi[maxIndex].data.length; j++) { //j < weiyi[0].data.length
+            }
+            for (let i = 0; i < weiyi.length;i++){
+              
+              for (let j = 0; j < weiyi[index].data.length; j++) { //j < weiyi[0].data.length
                 arrWeiyi.push({
-                  year: weiyi[maxIndex].data[j] ? weiyi[maxIndex].data[j].time.slice(5):null, 
+                  year: weiyi[index].data[j] ? weiyi[index].data[j].time.slice(5):null, 
                   type: weiyi[i].devname ? weiyi[i].devname:null,
                   value: weiyi[i].data[j] ? weiyi[i].data[j].data.l:null})
-                  }
+              }
             }
-            //console.log(maxIndex)
+            for (var x = 0; x < shidu.length; x++) {
+              if (indexMax < shidu[x].data.length) {
+                indexMax2 = shidu[x].data.length;
+                index2 = x;
+              } else {
+                index2 = 0;
+              }
+            }
             for (let i = 0; i < shidu.length; i++) {
-              for (let j = 0; j < shidu[0].data.length; j++) { //j < shidu[0].data.length;
+              for (let j = 0; j < shidu[index2].data.length; j++) { //j < shidu[0].data.length;
                 arrShidu.push({
-                  year: shidu[0].data[j].time.slice(5),
+                  year: shidu[index2].data[j] ? shidu[index2].data[j].time.slice(5) : null,
                   type: shidu[i].devname,
                   value: shidu[i].data[j] ? shidu[i].data[j].data.rh:null
                 })
@@ -449,7 +468,7 @@ Page({
           this.ecComponent2 = this.selectComponent('.column-dom2');
           this.ecComponent.init(initChart);
           this.ecComponent2.init(initChart2);
-          
+          console.log(weiyi)
         },
         fail:  () => {
           wx.showToast({
@@ -458,7 +477,36 @@ Page({
           });
         },
     })
-    
+    //阈值请求
+    wx.request({  //位移
+      url: that.data.porjectArr[options.porject].apiUrl + '/alarm/getAlarmValueByDevcode.shtml',
+      dataType: "json",
+      jsonp: "callback",
+      data: { 
+        session_id: this.data.session_id,
+        devcode: that.data.porjectArr[options.porject].devcodeWeiyi },
+      success:(res)=>{
+        //console.log(res)
+        if (res.data.para_b){
+          yuzhiWeiyi = res.data.para_b
+        }
+        
+      }
+    })
+    wx.request({  //湿度
+      url: that.data.porjectArr[options.porject].apiUrl + '/alarm/getAlarmValueByDevcode.shtml',
+      dataType: "json",
+      jsonp: "callback",
+      data: {
+        session_id: this.data.session_id,
+        devcode: that.data.porjectArr[options.porject].devcodeShidu
+      },
+      success: (res) => {
+        if (res.data.para_b) {
+          yuzhiShidu = res.data.para_b
+        }
+      }
+    })
   },
   //获取时间格式
   getDate(datetime, year, month, date, hour, minute, second) {
@@ -513,6 +561,14 @@ Page({
       + seperator2 + Seconds;
     return currentdate;
   },
+  //图片点击预览放大
+  imgLook(){
+    wx.previewImage({
+      current: this.data.imgUrl, // 当前显示图片的http链接
+      urls: [this.data.imgUrl] // 需要预览的图片http链接列表
+
+    })
+  }
   
 })
 
