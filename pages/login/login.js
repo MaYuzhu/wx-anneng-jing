@@ -43,6 +43,13 @@ Page({
       dev: options.num,
       isDongAo: options.num
     })
+    if (wx.getStorageSync('username' + that.data.dev)){
+      that.setData({
+        username: wx.getStorageSync('username' + that.data.dev),
+        pwd: wx.getStorageSync('password' + that.data.dev)
+      })
+      //console.log("记住了密码")
+    }
      
     
   },
@@ -103,6 +110,8 @@ Page({
           duration: 2000
         })
         wx.setStorageSync('session_id', res.data.session_id)
+        wx.setStorageSync('username' + that.data.dev, that.data.username)//that.data.username
+        wx.setStorageSync('password' + that.data.dev, that.data.pwd)//that.data.pwd
         
         wx.navigateTo({
           url: '../index/index?porject=' + that.data.dev,

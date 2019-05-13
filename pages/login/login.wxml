@@ -8,11 +8,11 @@
 				
 				<view class="f1">
 					<label for="user" class="label1">用户</label>
-					<input id="user" type="text" class="name username" bindinput ="userNameInput"></input>
+					<input id="user" type="text" class="name username" bindinput ="userNameInput" value="{{username}}"></input>
 				</view>
 				<view class="f2">
 					<label for="psd" class="label2">密码</label>
-					<input class="password" id="psd" type="password" bindinput ="pwdInput"></input>
+					<input class="password" id="psd" type="password" bindinput ="pwdInput" value="{{pwd}}"></input>
 				</view>
 
 				<button class="denglu" bindtap="login_index" type="primary">登  录</button>

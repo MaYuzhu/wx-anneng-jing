@@ -146,7 +146,7 @@ function initChart2(canvas, width, height, F2) { // 使用 F2 绘制图表
     },
     value: {
       min: 0,
-      max: 60,
+      //max: 60,
       tickCount: 4,
       formatter: function formatter(val) {
         return val.toFixed(1) + '%';
@@ -466,7 +466,7 @@ Page({
           this.ecComponent2.init(initChart2);
           //console.log(weiyi)
           //console.log(indexMax)
-          console.log(index)
+          //console.log(index)
         },
         fail:  () => {
           wx.showToast({
