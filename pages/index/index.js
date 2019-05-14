@@ -3,6 +3,7 @@
 //const app = getApp()
 import F2 from '@antv/wx-f2';
 var _ = require('../../utils/underscore.js');
+var util = require('../../utils/util.js');
 
 let chart = null
 let chart2 = null
@@ -322,7 +323,8 @@ Page({
         'session_id': that.data.session_id,
         'timetype': 'hour',
         'starttime': that.data.date + ' 00:00:00',
-        'endtime': that.data.date + ' 23:59:59',
+        //'endtime': new Date(that.data.date + ' 23:59:59'.replace(/-/g, "/")).getTime() > new Date().getTime() ? that.data.date + ' ' + new Date().toLocaleTimeString('chinese', { hour12: false }) : that.data.date + ' 23:59:59',
+        'endtime': +new Date((that.data.date + ' 23:59:59').replace(/-/g, '/')) > +new Date() ? that.data.date + ' ' + new Date().toLocaleTimeString('chinese', { hour12: false }) : that.data.date + ' 23:59:59',
         'devcode': that.data.devArrCode[that.data.devArrIndex],
 
       },
@@ -341,6 +343,9 @@ Page({
             tableData: devData
           })
         }else{
+          that.setData({
+            tableData: null
+          })
           wx.showToast({
             icon: 'none',
             title: '暂无数据'
@@ -404,6 +409,10 @@ Page({
               //         }
               // }
             if(!res.data){
+              wx.showToast({
+                icon: 'none',
+                title: '网络错误...'
+              });
               return false
             }
             let devA = []
@@ -439,7 +448,7 @@ Page({
               
               for (let j = 0; j < weiyi[index].data.length; j++) { //j < weiyi[0].data.length
                 arrWeiyi.push({
-                  year: weiyi[index].data[j] ? weiyi[index].data[j].time.slice(5):null, 
+                  year: weiyi[index].data[j] ? weiyi[index].data[j].time.substring(5,13):null, 
                   type: weiyi[i].devname ? weiyi[i].devname:null,
                   value: weiyi[i].data[j] ? weiyi[i].data[j].data.l:null})
               }
@@ -453,7 +462,7 @@ Page({
             for (let i = 0; i < shidu.length; i++) {
               for (let j = 0; j < shidu[index2].data.length; j++) { //j < shidu[0].data.length;
                 arrShidu.push({
-                  year: shidu[index2].data[j] ? shidu[index2].data[j].time.slice(5) : null,
+                  year: shidu[index2].data[j] ? shidu[index2].data[j].time.substring(5, 13) : null,
                   type: shidu[i].devname,
                   value: shidu[i].data[j] ? shidu[i].data[j].data.rh:null
                 })
