@@ -30,6 +30,21 @@ Page({
     isDongAo:'',
   },
 
+  clearUser: function () {
+    let that = this;
+    this.setData({
+      username: ''
+    })
+    wx.setStorageSync('username' + that.data.dev, '')//that.data.username
+    
+  },
+  clearPwd: function () {
+    let that = this;
+    this.setData({
+      pwd: ''
+    })
+    wx.setStorageSync('password' + that.data.dev, '')//that.data.pwd
+  },
   /**
    * 生命周期函数--监听页面加载
    */

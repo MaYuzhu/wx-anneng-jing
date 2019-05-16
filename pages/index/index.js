@@ -448,7 +448,7 @@ Page({
               
               for (let j = 0; j < weiyi[index].data.length; j++) { //j < weiyi[0].data.length
                 arrWeiyi.push({
-                  year: weiyi[index].data[j] ? weiyi[index].data[j].time.substring(5,13):null, 
+                  year: weiyi[index].data[j] ? weiyi[index].data[j].time.substring(5,16):null, 
                   type: weiyi[i].devname ? weiyi[i].devname:null,
                   value: weiyi[i].data[j] ? weiyi[i].data[j].data.l:null})
               }
@@ -462,7 +462,7 @@ Page({
             for (let i = 0; i < shidu.length; i++) {
               for (let j = 0; j < shidu[index2].data.length; j++) { //j < shidu[0].data.length;
                 arrShidu.push({
-                  year: shidu[index2].data[j] ? shidu[index2].data[j].time.substring(5, 13) : null,
+                  year: shidu[index2].data[j] ? shidu[index2].data[j].time.substring(5, 16) : null,
                   type: shidu[i].devname,
                   value: shidu[i].data[j] ? shidu[i].data[j].data.rh:null
                 })

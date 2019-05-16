@@ -9,10 +9,12 @@
 				<view class="f1">
 					<label for="user" class="label1">用户</label>
 					<input id="user" type="text" class="name username" bindinput ="userNameInput" value="{{username}}"></input>
+          <view class="icon" bindtap="clearUser"><icon wx:if="{{username!=''}}" type="clear" size="24"/></view>
 				</view>
 				<view class="f2">
 					<label for="psd" class="label2">密码</label>
 					<input class="password" id="psd" type="password" bindinput ="pwdInput" value="{{pwd}}"></input>
+          <view class="icon" bindtap="clearPwd"><icon wx:if="{{pwd!=''}}" type="clear" size='24'/></view>
 				</view>
 
 				<button class="denglu" bindtap="login_index" type="primary">登  录</button>
