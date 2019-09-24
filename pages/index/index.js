@@ -5,6 +5,9 @@ import F2 from '@antv/wx-f2';
 var _ = require('../../utils/underscore.js');
 var util = require('../../utils/util.js');
 
+//var yuming = 'slope.anew-eco.com'
+var yuming = 'weixin.zktop.com'
+
 let chart = null
 let chart2 = null
 let data = null
@@ -226,14 +229,14 @@ Page({
     porjectArr: [
       {
         title: '京张高铁边坡安全监测',
-        apiUrl: 'https://weixin.zktop.com/jingzhang',
+        apiUrl: 'https://' + yuming +'/jingzhang',
         buildcode: '1101F001',
         devcodeWeiyi: '1101F00100010O08',
         devcodeShidu: '1101F00100010K03'
       },
       {
         title: '京沈高铁边坡安全监测',
-        apiUrl: 'https://weixin.zktop.com/jingshen',
+        apiUrl: 'https://' + yuming +'/jingshen',
         buildcode: '1308F0001',
         devcodeWeiyi: '1308F00010010O09',
         devcodeShidu: '1308F00010010K01'
@@ -248,8 +251,8 @@ Page({
     ],
     imgUrlArr:[
       
-      'https://weixin.zktop.com/pic/jingzhang.png',
-      'https://weixin.zktop.com/pic/jingshen.png',
+      'https://' + yuming +'/pic/jingzhang.png',
+      'https://' + yuming +'/pic/jingshen.png',
 
     ],
     imgUrl:'',

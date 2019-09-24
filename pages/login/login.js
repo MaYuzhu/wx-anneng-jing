@@ -1,4 +1,6 @@
 // pages/login/login.js
+//var yuming = 'slope.anew-eco.com'
+var yuming = 'weixin.zktop.com'
 Page({
 
   /**
@@ -9,9 +11,9 @@ Page({
     bgImg: "",
     apiUrl:'',
     apiUrlArr: [
-      'https://weixin.zktop.com/jingzhang',  //京张
-      'https://weixin.zktop.com/jingshen',   //京沈
-      'https://weixin.zktop.com/jingshen'   //冬奥会
+      'https://' + yuming +'/jingzhang',  //京张
+      'https://' + yuming +'/jingshen',   //京沈
+      'https://' + yuming +'/jingshen'   //冬奥会
     ],
     dev: 0,
     textImgUrlArr: [
@@ -20,9 +22,9 @@ Page({
       "../../static/dongaohui_login.png"
     ],
     bgImgUrl: [
-      "https://weixin.zktop.com/pic/jzhang_iphone_bg.jpg",
-      "https://weixin.zktop.com/pic/js_iphone_bg.jpg",
-      "https://weixin.zktop.com/pic/dongaohui_bg.jpg"
+      'https://'+yuming+'/pic/jzhang_iphone_bg.jpg',
+      'https://'+yuming+'/pic/js_iphone_bg.jpg',
+      'https://'+yuming+'/pic/dongaohui_bg.jpg'
     ],
 
     username: '',
