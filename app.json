@@ -3,6 +3,7 @@
     
     "pages/loginBefore/loginBefore",
     "pages/index/index",
+    "pages/dongAo/dongAo",
     "pages/logs/logs",
     "pages/login/login"
   ],

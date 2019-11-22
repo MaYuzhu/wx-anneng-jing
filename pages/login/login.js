@@ -13,7 +13,7 @@ Page({
     apiUrlArr: [
       'https://' + yuming +'/jingzhang',  //京张
       'https://' + yuming +'/jingshen',   //京沈
-      'https://' + yuming +'/jingshen'   //冬奥会
+      'https://' + yuming +'/owg'   //冬奥会
     ],
     dev: 0,
     textImgUrlArr: [
@@ -84,13 +84,7 @@ Page({
   
   login_index:function(e){
     let that = this
-    if (that.data.isDongAo == 2) {
-      wx.showToast({
-        icon: 'none',
-        title: '冬奥会项目建设中...'
-      });
-      return;
-    }
+    
     if (that.data.username.length <= 0) {
       wx.showToast({
         icon: 'none',
@@ -130,9 +124,16 @@ Page({
         wx.setStorageSync('username' + that.data.dev, that.data.username)//that.data.username
         wx.setStorageSync('password' + that.data.dev, that.data.pwd)//that.data.pwd
         
-        wx.navigateTo({
-          url: '../index/index?porject=' + that.data.dev,
-        });
+        
+        if (that.data.isDongAo == 2) {
+          wx.navigateTo({
+            url: '../dongAo/dongAo?porject=' + that.data.dev,
+          });
+        }else{
+          wx.navigateTo({
+            url: '../index/index?porject=' + that.data.dev,
+          });
+        }
 
       }
 
