@@ -5,19 +5,29 @@
 		<view class="fenge"></view>
 		<view class="content1">
 			<text>位移实时数据</text>
-        <view class="container">
-            <ff-canvas class='column-dom1' id="column-dom" canvas-id="column1" opts="{{ opts }}"></ff-canvas>
-        </view>
+            <view class="container">
+                <ff-canvas class='column-dom1' id="column-dom" canvas-id="column1" opts="{{ opts }}                     "></ff-canvas>
+            </view>
  
-    </view>
+        </view>
 		<view class="fenge"></view>
 		<view class="content2">
 		    <text>土壤含水率实时数据</text>
 		    <view class="container">
-            <ff-canvas class='column-dom2' id="column-dom" canvas-id="column2" opts="{{ opts2 }}"></ff-canvas>
-        </view>
+                 <ff-canvas class='column-dom2' id="column-dom" canvas-id="column2" opts="{{ opts2                      }}"></ff-canvas>
+            </view>
 		</view>
+        <!-- 温度 -->
+        <view class="fenge"></view>
+		<view class="content2">
+		    <text>温度实时数据</text>
+		    <view class="container">
+                 <ff-canvas class='column-dom3'  id="column-dom" canvas-id="column3" opts="{{ opts3                      }}"></ff-canvas>
+            </view>
+		</view>
+        
 		<view class="fenge"></view>
+
 		<view class="content3">
 			
 			<text>设备布点图</text>

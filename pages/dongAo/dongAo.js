@@ -10,17 +10,20 @@ var yuming = 'weixin.zktop.com'
 
 let chart = null
 let chart2 = null
+let chart3 = null
 let data = null
 let arrWeiyi = []
 let arrShidu = []
+let arrWendu = []
 let arrTest = []
 let padding = [70, 124]
 let paddingV = 70
 let padding2 = [70, 90]
-let paddingV2 = 70
+let paddingV2 = 80
 let yuzhiWeiyi = 10
 let yuzhiShidu = 20
-
+let yuzhiWendu = 25
+let shiduMax = 60
 function initChart(canvas, width, height, F2) { // 使用 F2 绘制图表
   data = arrWeiyi
   chart = new F2.Chart({
@@ -137,7 +140,7 @@ function initChart2(canvas, width, height, F2) { // 使用 F2 绘制图表
     el: canvas,
     width,
     height,
-    padding: ['auto', 'auto', paddingV, 'auto'],
+    padding: ['auto', 'auto', paddingV2, 'auto'],
 
   });
 
@@ -150,7 +153,7 @@ function initChart2(canvas, width, height, F2) { // 使用 F2 绘制图表
     },
     value: {
       min: 0,
-      //max: 60,
+      max: shiduMax,
       tickCount: 4,
       formatter: function formatter(val) {
         return val.toFixed(1) + '%';
@@ -223,6 +226,99 @@ function initChart2(canvas, width, height, F2) { // 使用 F2 绘制图表
   chart2.render();
   return chart2;
 }
+
+function initChart3(canvas, width, height, F2) { // 使用 F2 绘制图表
+    data = arrWendu
+    chart3 = new F2.Chart({
+        el: canvas,
+        width,
+        height,
+        padding: ['auto', 'auto', paddingV2, 'auto'],
+
+    });
+
+    chart3.source(data, {
+        date: {
+            range: [0, 1],
+            type: 'timeCat',
+            mask: 'MM-DD',
+
+        },
+        value: {
+            min: 0,
+            //max: shiduMax,
+            tickCount: 4,
+            formatter: function formatter(val) {
+                return val.toFixed(1) + '℃';
+            }
+        },
+
+        // sales: {
+        //   tickCount: 5
+        // }
+    });
+    chart3.scale('year', {
+        range: [0, 1]
+    });
+    chart3.guide().line({ // 绘制辅助线
+        start: ['min', yuzhiWendu],
+        end: ['max', yuzhiWendu],
+        style: {
+            stroke: '#FF4D4F',
+            lineDash: [2]
+        }
+    });
+    chart3.guide().text({ // 绘制辅助文本
+        position: ['max', yuzhiWendu],
+        content: '阈值' + yuzhiWendu,
+        offsetY: -5,
+        style: {
+            fill: '#FF4D4F',
+            textAlign: 'end',
+            textBaseline: 'bottom'
+        }
+    });
+
+    chart3.legend({ position: 'bottom', align: 'left' });
+    chart3.tooltip({
+
+        custom: true, // 自定义 tooltip 内容框
+        onChange: function onChange(obj) {
+            var legend = chart3.get('legendController').legends.bottom[0];
+            var tooltipItems = obj.items;
+            var legendItems = legend.items;
+            var map = {};
+            legendItems.map(function (item) {
+                map[item.name] = _.clone(item);
+            });
+            tooltipItems.map(function (item) {
+                var name = item.name;
+                var value = item.value;
+                if (map[name]) {
+                    map[name].value = value;
+                }
+            });
+            legend.setItems(_.values(map));
+        },
+    })
+    chart3.axis('year', {
+        tickLine: {
+            length: 4,
+            stroke: '#e8e8e8',
+            lineWidth: 1
+        },
+        label: {
+            textAlign: 'end',
+            textBaseline: 'middle',
+            rotate: Math.PI / -4
+        }
+    });
+
+    chart3.line().position('year*value').color('type').size(2);
+    chart3.point().position('year*value').color('type').size(2);
+    chart3.render();
+    return chart3;
+}
 Page({
   data: {
 
@@ -244,9 +340,10 @@ Page({
       {
         title: '冬奥会边坡安全监测',
         apiUrl: 'https://' + yuming + '/owg',
-        buildcode: '1308F0001',
-        devcodeWeiyi: '1308F00010010O09',
-        devcodeShidu: '1308F00010010K01'
+        buildcode: '1101F001',
+        devcodeWeiyi: '1101F00100010O07',
+        devcodeShidu: '1101F00100010K05',
+        devcodeWendu: '1101F00100010T09'
       }
     ],
     imgUrlArr: [
@@ -268,6 +365,9 @@ Page({
     },
     opts2: {
       onInit: initChart2
+    },
+    opts3: {
+        onInit: initChart3
     },
     startTime: '',
     endTime: '',
@@ -367,9 +467,9 @@ Page({
   },
   onLoad: function (options) {
     let that = this;
-    console.log(options)
-    paddingV = padding[options.porject]
-    paddingV2 = padding2[options.porject]
+    //console.log(options)
+    //paddingV = padding[options.porject]
+    //paddingV2 = padding2[options.porject]
     if (options.porject) {
       that.setData({
         imgUrl: that.data.imgUrlArr[options.porject],
@@ -403,15 +503,8 @@ Page({
         'session_id': this.data.session_id
       },
       success: res => {
-        //console.log(res.data)
-        // for(let i=0;i<res.data.length;i++){
-        //     //aaa.push({ name: res.data[i].devname})
-        //     for (let j = 0; j < 11; j++) { //j < res.data[0].data.length
-        //         arrTest.push({ year: res.data[0].data[j].time, 
-        //             type: res.data[i].devname,
-        //             value: res.data[i].data[j].data.rh})
-        //         }
-        // }
+        console.log(res.data)
+        
         if (!res.data) {
           wx.showToast({
             icon: 'none',
@@ -435,13 +528,22 @@ Page({
         let shidu = res.data.filter((item) => {
           return item.type == 'K'
         })
+        let wendu = res.data.filter((item) => {
+            return item.type == 'T'
+        })
         arrWeiyi = []
         arrShidu = []
+        arrWendu = []
 
         let indexMax = weiyi[0].data.length
         let index = 0
         let indexMax2 = shidu[0].data.length
         let index2 = 0
+        if (wendu.length<0){
+            let indexMax3 = wendu[0].data.length
+            let index3 = 0
+        }
+        
         for (var x = 0; x < weiyi.length; x++) {
           if (indexMax < weiyi[x].data.length) {
             indexMax = weiyi[x].data.length;
@@ -466,6 +568,10 @@ Page({
         }
         for (let i = 0; i < shidu.length; i++) {
           for (let j = 0; j < shidu[index2].data.length; j++) { //j < shidu[0].data.length;
+              
+            // if (shidu[i].data[j].data.rh < yuzhiShidu){
+            //       shiduMax = 40
+            // }
             arrShidu.push({
               year: shidu[index2].data[j] ? shidu[index2].data[j].time.substring(5, 16) : null,
               type: shidu[i].devname,
@@ -473,11 +579,31 @@ Page({
             })
           }
         }
+        if (wendu){
+            for (var x = 0; x < wendu.length; x++) {
+                if (indexMax < wendu[x].data.length) {
+                    indexMax3 = wendu[x].data.length;
+                    index3 = x;
+                }
+            }
+            for (let i = 0; i < wendu.length; i++) {
+                for (let j = 0; j < wendu[index3].data.length; j++) {
+                    arrWendu.push({
+                        year: wendu[index3].data[j] ? wendu[index3].data[j].time.substring(5, 16) : null,
+                        type: wendu[i].devname,
+                        value: wendu[i].data[j] ? wendu[i].data[j].data.rh : null
+                    })
+                }
+            }
+        }
+        
 
         this.ecComponent = this.selectComponent('.column-dom1');
         this.ecComponent2 = this.selectComponent('.column-dom2');
+        this.ecComponent3 = this.selectComponent('.column-dom3');
         this.ecComponent.init(initChart);
         this.ecComponent2.init(initChart2);
+        this.ecComponent3.init(initChart3);
         //console.log(weiyi)
         //console.log(indexMax)
         //console.log(index)
@@ -499,7 +625,7 @@ Page({
         devcode: that.data.porjectArr[options.porject].devcodeWeiyi
       },
       success: (res) => {
-        //console.log(res)
+        console.log(res)
         if (res.data.para_b) {
           yuzhiWeiyi = res.data.para_b
         }
@@ -520,6 +646,20 @@ Page({
         }
       }
     })
+      wx.request({  //温度
+          url: that.data.porjectArr[options.porject].apiUrl + '/alarm/getAlarmValueByDevcode.shtml',
+          dataType: "json",
+          jsonp: "callback",
+          data: {
+              session_id: this.data.session_id,
+              devcode: that.data.porjectArr[options.porject].devcodeWendu
+          },
+          success: (res) => {
+              if (res.data.para_a) {
+                  yuzhiWendu = res.data.para_a
+              }
+          }
+      })
   },
   //获取时间格式
   getDate(datetime, year, month, date, hour, minute, second) {
