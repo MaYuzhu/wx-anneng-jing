@@ -342,7 +342,7 @@ Page({
         apiUrl: 'https://' + yuming + '/owg',
         buildcode: '1101F001',
         devcodeWeiyi: '1101F00100010O07',
-        devcodeShidu: '1101F00100010K05',
+        devcodeShidu: '1101F00100010K03',
         devcodeWendu: '1101F00100010T09'
       }
     ],
@@ -350,7 +350,7 @@ Page({
 
       'https://' + yuming + '/pic/jingzhang.png',
       'https://' + yuming + '/pic/jingshen.png',
-      'https://' + yuming + '/pic/owg.png',
+      'https://' + yuming + '/pic/owg.jpg',
     ],
     imgUrl: '',
     date: '请选择日期',
@@ -433,7 +433,7 @@ Page({
       },
       success: (res) => {
         let devData = []
-        //console.log(res.data)
+        console.log(res.data)
         if (res.data) {
           for (let i = 0; i < res.data.data.length; i++) {
             devData.push({
@@ -534,14 +534,27 @@ Page({
         arrWeiyi = []
         arrShidu = []
         arrWendu = []
-
-        let indexMax = weiyi[0].data.length
-        let index = 0
-        let indexMax2 = shidu[0].data.length
-        let index2 = 0
+          let indexMax, indexMax2, indexMax3, index, index2, index3
+        if (weiyi.length>0){
+            indexMax = weiyi[0].data.length
+             index = 0
+        }else{
+             indexMax = 12
+             index = 0
+        }
+        if (shidu.length < 0) {
+             indexMax2 = shidu[0].data.length
+             index2 = 0
+        }else{
+             indexMax2 = 12
+             index2 = 0
+        }
         if (wendu.length<0){
-            let indexMax3 = wendu[0].data.length
-            let index3 = 0
+             indexMax3 = wendu[0].data.length
+             index3 = 0
+        }else{
+             indexMax3 = 12
+             index3 = 0
         }
         
         for (var x = 0; x < weiyi.length; x++) {
@@ -561,7 +574,7 @@ Page({
           }
         }
         for (var x = 0; x < shidu.length; x++) {
-          if (indexMax < shidu[x].data.length) {
+          if (indexMax2 < shidu[x].data.length) {
             indexMax2 = shidu[x].data.length;
             index2 = x;
           }
@@ -581,7 +594,7 @@ Page({
         }
         if (wendu){
             for (var x = 0; x < wendu.length; x++) {
-                if (indexMax < wendu[x].data.length) {
+                if (indexMax3 < wendu[x].data.length) {
                     indexMax3 = wendu[x].data.length;
                     index3 = x;
                 }
@@ -655,9 +668,10 @@ Page({
               devcode: that.data.porjectArr[options.porject].devcodeWendu
           },
           success: (res) => {
-              if (res.data.para_a) {
-                  yuzhiWendu = res.data.para_a
-              }
+              console.log(res)
+            //   if (res.data.para_a) {
+            //       yuzhiWendu = res.data.para_a
+            //   }
           }
       })
   },
